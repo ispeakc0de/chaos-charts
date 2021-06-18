@@ -1,0 +1,88 @@
+apiVersion: litmuschaos.io/v1alpha1
+description:
+  message: |
+    Injects network packet loss on pods belonging to an app deployment
+kind: ChaosExperiment
+metadata:
+  name: pod-network-partition
+  labels:
+    name: pod-network-partition
+    app.kubernetes.io/part-of: litmus
+    app.kubernetes.io/component: chaosexperiment
+    app.kubernetes.io/version: latest
+spec:
+  definition:
+    scope: Namespaced
+    permissions:
+    - apiGroups:
+        - ""
+        - "batch"
+        - "apps"
+        - "apps.openshift.io"
+        - "argoproj.io"
+        - "litmuschaos.io"
+      resources:
+        - "jobs"
+        - "pods"
+        - "pods/log"
+        - "replicationcontrollers"
+        - "deployments"
+        - "statefulsets"
+        - "daemonsets"
+        - "replicasets"
+        - "deploymentconfigs"
+        - "rollouts"
+        - "pods/exec"
+        - "events"
+        - "chaosengines"
+        - "chaosexperiments"
+        - "chaosresults"
+      verbs:
+        - "get"
+        - "list"
+        - "patch"
+        - "create"
+        - "update"
+        - "delete"
+        - "deletecollection"
+    image: "shubh214/go-runner:np"
+    imagePullPolicy: Always
+    args:
+    - -c
+    - ./experiments -name pod-network-partition
+    command:
+    - /bin/bash
+    env:
+    
+    - name: TARGET_CONTAINER
+      value: ''
+
+    - name: TOTAL_CHAOS_DURATION
+      value: '60' # in seconds
+
+    # ime period to wait before and after injection of chaos in sec
+    - name: RAMP_TIME
+      value: ''
+
+    # it can be litmus or pumba
+    - name: LIB
+      value: 'litmus'
+
+    # provide the destination ips
+    # chaos injection will be triggered for these destination ips
+    - name: DESTINATION_IPS
+      value: ''
+
+    # provide the destination hosts
+    # chaos injection will be triggered for these destination hosts
+    - name: DESTINATION_HOSTS
+      value: ''
+
+    - name: POLICY_TYPE
+      value: ''
+
+    labels:
+      name: pod-network-partition
+      app.kubernetes.io/part-of: litmus
+      app.kubernetes.io/component: experiment-job
+      app.kubernetes.io/version: latest
