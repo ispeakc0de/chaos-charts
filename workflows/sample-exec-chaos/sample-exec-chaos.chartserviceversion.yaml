@@ -1,0 +1,38 @@
+apiVersion: litmuchaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  name: sample-exec-chaos
+  version: 0.1.0
+  annotations:
+    categories: sample-exec-chaos
+    chartDescription: Injects chaos on target application
+spec:
+  displayName: sample-exec-chaos
+  categoryDescription: >
+    It inject chaos on sample-exec-chaos and revert the chaos
+  experiments:
+    - sample-exec-chaos
+  keywords:
+    - Kubernetes
+    - sample-exec-chaos
+    - Pod
+    - Network
+  platforms:
+    - GKE
+    - Minikube
+    - Packet(Kubeadm)
+    - EKS
+    - AKS
+  maintainers:
+    - name: oumkale
+      email: oumkale@chaosnative.com
+  provider:
+    name: ChaosNative
+  links:
+    - name: Kubernetes Slack
+      url: https://slack.kubernetes.io/
+    - name: Documentation
+      url: https://docs.litmuschaos.io/docs/chaoshub/#generic-chaos
+  icon:
+    - url: https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/workflows/icons/sample-exec-chaos.png
+      mediatype: image/png
