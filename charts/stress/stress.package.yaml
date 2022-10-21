@@ -1,0 +1,5 @@
+packageName: stress
+experiments:
+  - name: pod-cpu-stress
+    CSV: pod-cpu-stress.chartserviceversion.yaml
+    desc: "pod-cpu-stress"
