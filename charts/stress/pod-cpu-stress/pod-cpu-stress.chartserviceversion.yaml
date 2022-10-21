@@ -1,0 +1,34 @@
+apiVersion: litmuchaos.io/v1alpha1
+kind: ChartServiceVersion
+metadata:
+  name: pod-cpu-stress
+  annotations:
+    categories: stress
+spec:
+  displayName: pod-cpu-stress 
+  categoryDescription: >
+    it stress the pdo of the target application, waits for the chaos duration and reverts the chaos 
+  keywords: 
+    - "pods" 
+    - "kubernetes" 
+    - "cpu" 
+    - "exec"
+  platforms: 
+    - "Minikube"
+  maturity: alpha
+  maintainers: 
+    - name: ispeakc0de 
+      email: shubham@chaosnative.com 
+  minKubeVersion: 1.12.0 
+  provider: 
+    name: ChaosNative
+  labels:
+    app.kubernetes.io/component: chartserviceversion
+    app.kubernetes.io/version: latest
+  links: 
+    - name: Documentation 
+      url: https://docs.litmuschaos.io/docs/getstarted/ 
+  icon:
+    - url: 
+      mediatype: ""
+  chaosexpcrdlink: https://raw.githubusercontent.com/litmuschaos/chaos-charts/master/charts/stress/pod-cpu-stress/experiment.yaml
