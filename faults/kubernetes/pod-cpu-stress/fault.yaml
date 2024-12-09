@@ -38,23 +38,27 @@ spec:
           - "update"
           - "delete"
           - "deletecollection"
-    image: "shubh214/go-runner:byoc"
+    image: "shubh214/go-runner:byoc-fault"
     imagePullPolicy: Always
     args:
       - -c
-      - ./experiments -name pod-cpu-stress
+      - ./experiments -name pod-cpu-hog-exec
     command:
       - /bin/bash
     env:
 
       - name: TOTAL_CHAOS_DURATION
-        value: ''
-
-      - name: CHAOS_INTERVAL
-        value: ''
+        value: '60'
 
       - name: RAMP_TIME
         value: ''
+
+      - name: CHAOS_INJECT_COMMAND
+        value: 'md5sum /dev/zero'
+
+      # The command to kill the chaos process
+      - name: CHAOS_KILL_COMMAND
+        value: "kill $(find /proc -name exe -lname '*/md5sum' 2>&1 | grep -v 'Permission denied' | awk -F/ '{print $(NF-1)}')"
 
     labels:
       name: pod-cpu-stress
